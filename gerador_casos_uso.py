@@ -15,15 +15,15 @@ def gerar_caso_uso():
     
     {documento_casos}
 
-    Considere os dados de entrada sugeridos pelo usuário.
+    Considere os dados de entrada sugeridos pelo usuário e gere o caso de uso no formato adequado.
   """
 
   prompt_usuario = f"""
-    Gere um caso de uso para Ana que deseja realizar login na plataforma AcordeLab.
+    Ana que deseja realizar login na plataforma AcordeLab.
   """
 
   resposta = cliente.chat.completions.create(
-    model="gpt-3.5-turbo",
+    model="ft:gpt-3.5-turbo-1106:student::BwQ0UnpO",
     messages = [
       { "role": "system", "content": prompt_sistema },
       { "role": "user", "content": prompt_usuario }
