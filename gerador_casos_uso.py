@@ -7,7 +7,7 @@ load_dotenv()
 
 cliente = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def gerar_caso_uso():
+def gerar_caso_uso(prompt, modelo=MODELO_REFINADO):
   documento_casos = carrega("documentos\explicacao_casos.txt")
 
   prompt_sistema = f"""
@@ -18,15 +18,15 @@ def gerar_caso_uso():
     Considere os dados de entrada sugeridos pelo usuário e gere o caso de uso no formato adequado.
   """
 
-  prompt_usuario = f"""
-    Ana que deseja realizar login na plataforma AcordeLab.
-  """
+  #prompt_usuario = f"""
+  #  Ana que deseja realizar login na plataforma AcordeLab.
+  #"""
 
   resposta = cliente.chat.completions.create(
-    model="ft:gpt-3.5-turbo-1106:student::BwQ0UnpO",
+    model=modelo,
     messages = [
       { "role": "system", "content": prompt_sistema },
-      { "role": "user", "content": prompt_usuario }
+      { "role": "user", "content": prompt }
     ],
     temperature=0.5
   )
