@@ -1,34 +1,34 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import time
 
-# Configurando o serviço do driver do Chromium
-service = Service('driver\chromedriver.exe')  # Insira o caminho para o chromedriver
+# Configurando o driver do Selenium
+selenium_service = Service('driver/chromedriver.exe')
+driver = webdriver.Chrome(service=selenium_service)
 
-# Inicializando o driver do Chromium
-driver = webdriver.Chrome(service=service)
+# Abrindo o aplicativo AcordeLab
+driver.get('https://almsantana.github.io/')
 
-try:
-    # Acessar o aplicativo da plataforma AcordeLab
-    driver.get("https://almsantana.github.io/")
+time.sleep(3)
 
-    time.sleep(3)  # Aguardar 3 segundos
+# Localizando o campo de login na tela inicial
+login_field = driver.find_element(By.ID, 'email')
 
-    # Preencher o campo "E-mail" com um e-mail válido
-    email_input = driver.find_element(By.ID, "email")
-    email_input.send_keys("email@acordelab.com.br")
+# Inserindo o nome de usuário
+login_field.send_keys('email@acordelab.com.br')
 
-    # Preencher o campo "Senha" com uma senha válida
-    password_input = driver.find_element(By.XPATH, '//input[@type="password"]')
-    password_input.send_keys("123senha")
+# Inserindo a senha
+password_field = driver.find_element(By.ID, 'senha')
+password_field.send_keys('123senha')
 
-    # Clicar no botão "Entrar"
-    enter_button = driver.find_element(By.CLASS_NAME, "botao-login")
-    enter_button.click()
+# Clicando no botão "Entrar"
+login_button = driver.find_element(By.CLASS_NAME, 'botao-login')
+login_button.click()
 
-    time.sleep(3)  # Aguardar 3 segundos
+# Pausa de 3 segundos antes de fechar o script
+time.sleep(3)
 
-finally:
-    # Fechar o navegador após a execução do teste
-    driver.quit()
+# Fechando o script
+driver.quit()
