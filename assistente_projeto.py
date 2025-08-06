@@ -43,9 +43,17 @@ def criar_assistente(lista_ids_arquivos=[], modelo =MODELO_GPT_4):
             Você também é um especialista em casos de uso, seguindo os templates indicados.
             E também é um especialista em gerar cenários de teste.
                 """,
-        model = modelo,
-        tools=  [{"type": "retrieval"}],
-        file_ids = lista_ids_arquivos
+        model=modelo,
+        tools=[{"type": "file_search"}],
+        tool_resources={
+            "file_search": {
+                "vector_stores": [
+                    {
+                        "file_ids": lista_ids_arquivos
+                    }
+                ]
+            }
+        }
     )
 
     return assistente
